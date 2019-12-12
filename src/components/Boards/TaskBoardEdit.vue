@@ -66,7 +66,7 @@ export default {
       saveTaskBoard: "saveTaskBoard"
     }),
     handleTaskBoardEditing(board) {
-      this.boardForm.id = board.id
+      this.boardForm.id = board._id
       this.boardForm.name = board.name
       this.boardForm.description = board.description
       this.$refs.newBoardPopup.open()

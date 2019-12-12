@@ -16,7 +16,7 @@
             <p class="card-text">{{ board.description }}</p>
           </div>
           <div class="card-footer bg-transparent">
-            <router-link class="btn btn-sm btn-app mr-2 mb-1" :to="{ name: 'task-board', params: { id: board.id } }"
+            <router-link class="btn btn-sm btn-app mr-2 mb-1" :to="{ name: 'task-board', params: { id: board._id } }"
               >View</router-link
             >
             <button class="btn btn-sm btn-danger mb-1" @click="handleArchiveTaskBoard(board)">
@@ -68,10 +68,11 @@ export default {
       Bus.$emit("taskboard-editing", board)
     },
     handleArchiveTaskBoard(board) {
-      this.archiveTaskBoard({ boardId: board.id })
+      debugger;
+      this.archiveTaskBoard({ boardId: board._id })
     },
     handleRestoreTaskBoard(board) {
-      this.restoreTaskBoard({ boardId: board.id })
+      this.restoreTaskBoard({ boardId: board._id })
     }
   },
   async created() {

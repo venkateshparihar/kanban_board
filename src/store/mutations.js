@@ -1,4 +1,6 @@
 import Vue from "vue"
+import axios from "axios"
+const dbSite = "http://localhost:3000/";
 
 // Lib to create guid
 const s4 = () =>
@@ -20,42 +22,51 @@ export default {
 
   // Save Task Board
   SAVE_TASKBOARD(state, payload) {
-    const board = state.boards.find(b => b.id == payload.id)
-    const itemIdx = state.boards.findIndex(b => b.id == payload.id)
+    const board = state.boards.find(b => b._id == payload.id)
+    const itemIdx = state.boards.findIndex(b => b._id == payload.id)
 
     // For existing item
     if (itemIdx > -1) {
       board.name = payload.name
       board.description = payload.description
-      Vue.set(state.boards, itemIdx, board)
+      
+      return axios.put(dbSite+'tasks/'+board._id,Vue.set(state.boards, itemIdx, board)).then(res => {
+        // state.boards.push(board);
+      })
     }
     // For new item
     else {
       const board = {
-        id: guid(),
         name: payload.name,
         description: payload.description,
         archived: false,
         lists: []
       }
-      state.boards.push(board)
+      return axios.post(dbSite+'tasks',board).then(res => {
+        state.boards.push(board);
+      })
     }
   },
 
   // Archive Task Board
   ARCHIVE_TASKBOARD(state, payload) {
-    const board = state.boards.find(b => b.id == payload.boardId)
-    const boardIdx = state.boards.findIndex(b => b.id == payload.boardId)
+    debugger;
+    const board = state.boards.find(b => b._id == payload.boardId)
+    const boardIdx = state.boards.findIndex(b => b._id == payload.boardId)
     board.archived = true
-    Vue.set(state.boards, boardIdx, board)
+    return axios.put(dbSite+'tasks/'+ board._id,
+    Vue.set(state.boards, boardIdx, board)).then(res => {
+    })
   },
 
   // Restore Task Board
   RESTORE_TASKBOARD(state, payload) {
-    const board = state.boards.find(b => b.id == payload.boardId)
-    const boardIdx = state.boards.findIndex(b => b.id == payload.boardId)
+    const board = state.boards.find(b => b._id == payload.boardId)
+    const boardIdx = state.boards.findIndex(b => b._id == payload.boardId)
     board.archived = false
-    Vue.set(state.boards, boardIdx, board)
+    return axios.put(dbSite+'tasks/'+board._id,
+    Vue.set(state.boards, boardIdx, board)).then(res => {
+    })
   },
 
   // Save Task List

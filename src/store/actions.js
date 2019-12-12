@@ -1,10 +1,11 @@
 const INITIAL_DATA_URL = "https://raw.githubusercontent.com/techlab23/data-repository/master/boards.json"
+const dbSite = "http://localhost:3000/";
 import axios from "axios"
 
 export default {
   async fetchData({ commit }) {
     commit("SET_LOADING_STATE", true)
-    return axios.get(INITIAL_DATA_URL).then(res => {
+    return axios.get(dbSite+'tasks').then(res => {
       commit("SET_INITIAL_DATA", res.data)
       commit("SET_LOADING_STATE", false)
     })
