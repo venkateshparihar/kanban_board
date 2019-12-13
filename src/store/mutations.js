@@ -48,7 +48,7 @@ export default {
 
   // Archive Task Board
   ARCHIVE_TASKBOARD(state, payload) {
-    debugger;
+    ;
     const board = state.boards.find(b => b._id == payload.boardId)
     const boardIdx = state.boards.findIndex(b => b._id == payload.boardId)
     board.archived = true
@@ -58,7 +58,7 @@ export default {
 
   // Restore Task Board
   RESTORE_TASKBOARD(state, payload) {
-    debugger;
+    ;
     const board = state.boards.find(b => b._id == payload.boardId)
     const boardIdx = state.boards.findIndex(b => b._id == payload.boardId)
     board.archived = false
@@ -68,7 +68,7 @@ export default {
 
   // Save Task List
   SAVE_TASKLIST(state, payload) {
-    debugger;
+    ;
     const board = state.boards.find(b => b._id == payload.boardId)
     const list = board.lists.find(l => l.id == payload.listId)
     const listIdx = board.lists.findIndex(l => l.id == payload.listId)
@@ -95,7 +95,7 @@ export default {
 
   // Archive Task List
   ARCHIVE_TASKLIST(state, payload) {
-    debugger;
+    ;
     const board = state.boards.find(b => b._id == payload.boardId)
     const list = board.lists.find(l => l.id == payload.listId)
     const listIdx = board.lists.findIndex(l => l.id == payload.listId)
@@ -106,7 +106,7 @@ export default {
 
   // Restore Task List
   RESTORE_TASKLIST(state, payload) {
-    debugger;
+    ;
     const board = state.boards.find(b => b._id == payload.boardId)
     const list = board.lists.find(l => l.id == payload.listId)
     const listIdx = board.lists.findIndex(l => l.id == payload.listId)
@@ -124,10 +124,10 @@ export default {
 
   // Reorder Task List Items
   REORDER_TASKLIST_ITEMS(state, payload) {
-    debugger;
     const board = state.boards.find(b => b._id == payload.boardId)
     const listIdx = board.lists.findIndex(l => l.id == payload.listId)
     Vue.set(board.lists[listIdx], "items", payload.items)
+    return axios.put(dbSite+'tasks/'+board._id,board);
   },
 
   // Set Active Board
@@ -137,7 +137,6 @@ export default {
 
   // Save Task List Item
   SAVE_TASKLIST_ITEM(state, payload) {
-    debugger;
     const board = state.boards.find(b => b._id == payload.boardId)
     const list = board.lists.find(l => l.id == payload.listId)
     const itemIdx = list.items.findIndex(item => item.id == payload.item.id)
@@ -151,19 +150,18 @@ export default {
       payload.item.id = guid()
       list.items.push(payload.item)
     }
-    console.log('board',board);
-    debugger;
     return axios.put(dbSite+'tasks/'+board._id,board);
   },
 
   // Delete Task List Item
   DELETE_TASKLIST_ITEM(state, payload) {
-    const board = state.boards.find(b => b.id == payload.boardId)
+    const board = state.boards.find(b => b._id == payload.boardId)
     const list = board.lists.find(l => l.id == payload.listId)
     const itemIdx = list.items.findIndex(item => item.id == payload.item.id)
     // For existing item
     if (itemIdx > -1) {
       Vue.delete(list.items, itemIdx)
+      return axios.put(dbSite+'tasks/'+board._id,board);
     }
   }
 }

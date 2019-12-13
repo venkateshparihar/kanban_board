@@ -68,7 +68,7 @@ export default {
       Bus.$emit("taskboard-editing", board)
     },
     handleArchiveTaskBoard(board) {
-      debugger;
+      ;
       this.archiveTaskBoard({ boardId: board._id })
     },
     handleRestoreTaskBoard(board) {
