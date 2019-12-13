@@ -36,7 +36,7 @@ export default {
       return this.isDesktop || this.isTablet
     },
     getBoard() {
-      return this.boards.find(b => b.id == this.param)
+      return this.boards.find(b => b._id == this.param)
     },
     lists: {
       get() {

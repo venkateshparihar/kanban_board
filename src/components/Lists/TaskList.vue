@@ -6,16 +6,7 @@
     </div>
     <div class="cards cards-list">
       <draggable v-model="items" v-bind="dragOptions">
-        <TaskListItem
-          v-for="item in items"
-          :item="item"
-          :list="list"
-          :board="board"
-          :key="item.id"
-          @item-edited="itemEdited"
-          @item-cancelled="itemCancelled"
-          @item-editing="itemEditing"
-        ></TaskListItem>
+       
       </draggable>
       <TaskListItem
         class="fixed-card"
@@ -66,8 +57,9 @@ export default {
         return this.list.items
       },
       set(reorderedListItems) {
+        debugger;
         const payload = {
-          boardId: this.board.id,
+          boardId: this.board._id,
           listId: this.list.id,
           items: reorderedListItems
         }

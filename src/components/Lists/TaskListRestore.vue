@@ -48,7 +48,7 @@ export default {
     }),
     handleTaskListRestore(list) {
       this.restoreTaskList({
-        boardId: this.activeBoard.id,
+        boardId: this.activeBoard._id,
         listId: list.id
       })
     },

@@ -73,7 +73,7 @@ export default {
       this.$validator.validateAll().then(async result => {
         if (result) {
           await this.saveTaskList({
-            boardId: this.activeBoard.id,
+            boardId: this.activeBoard._id,
             listId: this.listForm.id,
             name: this.listForm.name
           })

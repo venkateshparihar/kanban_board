@@ -31,7 +31,7 @@ export default {
     }),
     handleTaskListArchive() {
       this.archiveTaskList({
-        boardId: this.board.id,
+        boardId: this.board._id,
         listId: this.list.id
       })
       this.$refs.popup.close()

@@ -88,7 +88,7 @@ export default {
             text: this.form.text
           }
           this.saveTaskListItem({
-            boardId: this.board.id,
+            boardId: this.board._id,
             listId: this.list.id,
             item: updatedItem
           })
@@ -104,7 +104,7 @@ export default {
     },
     remove() {
       this.deleteTaskListItem({
-        boardId: this.board.id,
+        boardId: this.board._id,
         listId: this.list.id,
         item: this.item
       })
