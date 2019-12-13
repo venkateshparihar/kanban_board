@@ -1,8 +1,8 @@
 {
   "name": "task-management-app",
   "version": "0.1.0",
-  "description": "Task Management Application using Vue.js",
-  "author": "Shirish Nigam",
+  "description": "Task Management Application using Vue.js with mongodb Connection",
+  "author": "Venkatesh Parihar",
   "repository": {
     "type": "git",
     "url": "https://github.com/techlab23/task-management-app.git"
