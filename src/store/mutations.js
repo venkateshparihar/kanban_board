@@ -8,7 +8,9 @@ const s4 = () =>
     .toString(16)
     .substring(1)
 const guid = () => s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4()
-
+const dbPutQuery = (board) =>{
+  return axios.put(dbSite+'tasks/'+board._id,board);
+};
 export default {
   // Set Initial Data
   SET_INITIAL_DATA(state, payload) {
@@ -29,8 +31,8 @@ export default {
     if (itemIdx > -1) {
       board.name = payload.name
       board.description = payload.description
-      
-      return axios.put(dbSite+'tasks/'+board._id,Vue.set(state.boards, itemIdx, board));
+      return dbPutQuery(board);
+      // return axios.put(dbSite+'tasks/'+board._id,Vue.set(state.boards, itemIdx, board));
     }
     // For new item
     else {
@@ -52,8 +54,8 @@ export default {
     const board = state.boards.find(b => b._id == payload.boardId)
     const boardIdx = state.boards.findIndex(b => b._id == payload.boardId)
     board.archived = true
-    return axios.put(dbSite+'tasks/'+ board._id,
-    Vue.set(state.boards, boardIdx, board));
+    return dbPutQuery(board);
+    // return axios.put(dbSite+'tasks/'+ board._id,Vue.set(state.boards, boardIdx, board));
   },
 
   // Restore Task Board
@@ -62,8 +64,8 @@ export default {
     const board = state.boards.find(b => b._id == payload.boardId)
     const boardIdx = state.boards.findIndex(b => b._id == payload.boardId)
     board.archived = false
-    return axios.put(dbSite+'tasks/'+board._id,
-    Vue.set(state.boards, boardIdx, board));
+    return dbPutQuery(board);
+    // return axios.put(dbSite+'tasks/'+board._id,Vue.set(state.boards, boardIdx, board));
   },
 
   // Save Task List
@@ -77,7 +79,7 @@ export default {
     if (listIdx > -1) {
       list.name = payload.name
       Vue.set(board.lists, listIdx, list)
-      return axios.put(dbSite+'tasks/'+board._id,board);
+      // return axios.put(dbSite+'tasks/'+board._id,board);
     }
     // // For new item
     else {
@@ -89,8 +91,9 @@ export default {
         items: []
       }
       board.lists.push(list)
-      return axios.put(dbSite+'tasks/'+board._id,board);
+      // return axios.put(dbSite+'tasks/'+board._id,board);
     }
+    return dbPutQuery(board);
   },
 
   // Archive Task List
@@ -101,7 +104,8 @@ export default {
     const listIdx = board.lists.findIndex(l => l.id == payload.listId)
     list.archived = true
     Vue.set(board.lists, listIdx, list);
-    return axios.put(dbSite+'tasks/'+board._id,board);
+    return dbPutQuery(board);
+    // return axios.put(dbSite+'tasks/'+board._id,board);
   },
 
   // Restore Task List
@@ -112,22 +116,25 @@ export default {
     const listIdx = board.lists.findIndex(l => l.id == payload.listId)
     list.archived = false
     Vue.set(board.lists, listIdx, list);
-    return axios.put(dbSite+'tasks/'+board._id,board);
+    return dbPutQuery(board);
+    // return axios.put(dbSite+'tasks/'+board._id,board);
   },
 
   // Reorder TaskBoad Lists
   REORDER_TASKLISTS(state, payload) {
     const board = state.boards.find(b => b._id == payload.boardId)
     board.lists = Vue.set(board, "lists", payload.lists);
-    return axios.put(dbSite+'tasks/'+board._id,board);
+    return dbPutQuery(board);
+    // return axios.put(dbSite+'tasks/'+board._id,board);
   },
 
   // Reorder Task List Items
   REORDER_TASKLIST_ITEMS(state, payload) {
     const board = state.boards.find(b => b._id == payload.boardId)
     const listIdx = board.lists.findIndex(l => l.id == payload.listId)
-    Vue.set(board.lists[listIdx], "items", payload.items)
-    return axios.put(dbSite+'tasks/'+board._id,board);
+    Vue.set(board.lists[listIdx], "items", payload.items);
+    return dbPutQuery(board);
+    // return axios.put(dbSite+'tasks/'+board._id,board);
   },
 
   // Set Active Board
@@ -150,7 +157,8 @@ export default {
       payload.item.id = guid()
       list.items.push(payload.item)
     }
-    return axios.put(dbSite+'tasks/'+board._id,board);
+    return dbPutQuery(board);
+    // return axios.put(dbSite+'tasks/'+board._id,board);
   },
 
   // Delete Task List Item
@@ -161,7 +169,8 @@ export default {
     // For existing item
     if (itemIdx > -1) {
       Vue.delete(list.items, itemIdx)
-      return axios.put(dbSite+'tasks/'+board._id,board);
+      return dbPutQuery(board);
+      // return axios.put(dbSite+'tasks/'+board._id,board);
     }
   }
 }
